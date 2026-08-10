@@ -1,6 +1,7 @@
 
 import ecomerce_image from '../../assets/project/image.png';
 import portfolio_image  from '../../assets/project/image copy.png';
+import ecommerce_image_2 from '../../assets/project/image copy 2.png';
 
 
 
@@ -29,7 +30,7 @@ const projects = [
   },
   {
     id:3,
-    image: ecomerce_image ,
+    image: ecommerce_image_2,
     title:'Forever Ecommerce',
     description: "Full responsive ecommerce website build with React and Tailwind CSS",
     tech: ['React.js', 'Tailwind','Context API'],
