@@ -24,8 +24,8 @@ const projects = [
     title:'Portfolio Website',
     description: 'Personal portfolio with framer Motion animation',
     tech: ['React.js', 'Tailwind','Context API'],
-    live:'https://forever-ecommerce-f73m.vercel.app/',
-    gitHub:'https://github.com/SomironGope/Forever_Ecommerce'
+    live: 'https://forever-ecommerce-f73m.vercel.app/',
+    gitHub: 'https://github.com/SomironGope/SG_Portfolio/tree/main'
   },
   {
     id:3,

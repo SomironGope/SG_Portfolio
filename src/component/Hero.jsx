@@ -12,7 +12,7 @@ function Hero({ setActiveLink}) {
 
             <p className='max-w-2xl text-center text-gray-400'> I build fast, responsive, and user-friendly web applications
               using React.js, Tailwind CSS and mordern JavaScript technologies.
-              Passionate about creating clean UI and great user experiences.
+              Passionate about creating clear  UI and great user experiences.
             </p>
            <div className='flex gap-6'>
              <a onClick={()=> setActiveLink('contact') } href = '#contact' className= 'py-3 px-6 rounded-lg bg-linear-to-r from-orange-500 to-purple-600 text-white hover:bg-linear-to-r hover:from-pink-600 hover:to-sky-500 hover:transition-all hover:duration-300 hover:ease-in-out hover:scale-110'  > Let's Contact</a>
