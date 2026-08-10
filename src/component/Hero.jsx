@@ -6,7 +6,7 @@ function Hero({ setActiveLink}) {
        <div className = 'flex flex-col items-center justify-center gap-4'>
            <img src = {profile} alt = 'Somiron Gope' className = 'w-32 h-32 rounded-full object-cover' />
         
-            <h1 className='text-4xl font-bold text-center'>Hi, I'm <span className='text-purple-500'>Somiron Gope</span></h1>
+            <h1 className='text-4xl font-bold text-center bg-linear-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent'>Hi, I'm <span className='bg-linear-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent'>Somiron Gope</span></h1>
 
             <h2 className='text-xl text-center text-gray-500'>Frontend Developer | React.js & Tailwind CSS</h2>
 
@@ -16,7 +16,7 @@ function Hero({ setActiveLink}) {
             </p>
            <div className='flex gap-6'>
              <a onClick={()=> setActiveLink('contact') } href = '#contact' className= 'py-3 px-6 rounded-lg bg-linear-to-r from-orange-500 to-purple-600 text-white hover:bg-linear-to-r hover:from-pink-600 hover:to-sky-500 hover:transition-all hover:duration-300 hover:ease-in-out hover:scale-110'  > Let's Contact</a>
-             <a href='/Somiron_Gope.pdf' 
+             <a href='Frontend Developer CV.pdf' 
               target= "_blank" rel= 'noopener noreferrer'
                 className='border px-6 py-3 rounded-lg hover:transition-all hover:duration-300 hover:ease-in-out hover:scale-110' download >Download CV</a>
            </div>
