@@ -22,8 +22,8 @@ span{
 body{
   background-color:var(--color-bg);
   color:var(--color-text);
-  
-};
+
+}
 a,li{
   color:var(--color-text);
   text-decoration: none;
