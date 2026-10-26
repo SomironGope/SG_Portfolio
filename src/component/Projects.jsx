@@ -1,30 +1,78 @@
-import {motion} from 'framer-motion'
-import projectImage from '../assets/projcets/ProjectData';
+
+import { motion } from "framer-motion";
+import projectImage from "../assets/projcets/ProjectData";
+
 function Projects() {
   return (
-    
-      <motion.section initial = {{opacity: 0, y: 50}} whileInView={{opacity: 1, y: 0}} transition={{duration:0.8, delay: 0.2}} viewport={{once:true}} id = 'projects' className='min-h-screen py-20'>
-        <h1 className='text-4xl font-bold text-gray-300 text-center tracking-wider mb-10'>Projects</h1>
-        <div className='pt-5 grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 overflow-hidden px-2 sm:px-2 md:px-2 lg:px-3'>
-            {
-              projectImage.map ((project,index) => (
-                <div key={index} className='bg-slate-900/50 border border-slate-700 rounded-xl p-4 overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20'>
-                  <img src= {project.image} alt={project.title} className='w-full h-72 object-cover rounded-md  border border-sky-800 hover:scale-105 hover:transition-all hover:duration-300 hover:ease-in-out hover:shadow-md hover:shadow-sky-800' />
-                  <p className='text-sm sm:text-base text-gray-200 font-semibold tracking-wider leading-8 text-center py-1 sm:py-2 md:py-4 ' >{project.title}</p>
-                  <p className='py-2 px-1 sm:px-1 lg:px-2 sm:py-3 md:py-3 text-sm md:text-base lg:tex-md text-gray-300 text-justify'>{project.description}</p>
-                  
-                  <div className='flex gap-3 mt-3'>
-                     <a href= {project.live} target= "_blank" rel = "noopener noreferrer" className='px-3 py-2 rounded bg-amber-500 hover:bg-sky-500 hover:transition-all hover:duration-300 '>Live Demo</a>
-                    <a href={project.gitHub} target= "_blank" rel='noopener noreferrer' className='px-3 py-2 rounded bg-pink-500 hover:bg-violet-500 hover:transition-all hover:duration-300 '>GitHub</a>
-                    
-                    </div> 
-                </div>
-              ))
-            }
-        </div>
-        </motion.section>
-        
-  )
+    <motion.section
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay: 0.1 }}
+      viewport={{ once: true }}
+      id="projects"
+      className="min-h-screen px-4 py-20"
+    >
+      <h2 className="mb-12 text-center text-4xl font-bold tracking-wider">
+        <span className="bg-linear-to-r from-orange-400 to-purple-500 bg-clip-text text-transparent">
+          My Projects
+        </span>
+      </h2>
+
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {projectImage.map((project, index) => (
+          <motion.article
+            key={project.title || index}
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.2 }}
+            className="flex h-full flex-col overflow-hidden rounded-xl border border-slate-700 bg-slate-900/50 shadow-lg shadow-purple-500/5 transition-colors duration-300 hover:border-purple-500/50 hover:shadow-purple-500/10"
+          >
+            <div className="overflow-hidden">
+              <img
+                src={project.image}
+                alt={project.title}
+                loading="lazy"
+                className="h-56 w-full border-b border-slate-700 object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+
+            <div className="flex flex-1 flex-col p-5">
+              <h3 className="mb-3 text-center text-xl font-semibold text-gray-100">
+                {project.title}
+              </h3>
+
+              <p className="mb-5 flex-1 text-justify text-sm leading-7 text-gray-300 sm:text-base">
+                {project.description}
+              </p>
+
+              <div className="mt-auto flex flex-wrap gap-3">
+                {project.live && (
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 rounded-lg bg-amber-500 px-4 py-2.5 text-center font-medium text-slate-950 transition duration-300 hover:bg-amber-400"
+                  >
+                    Live Demo ↗
+                  </a>
+                )}
+
+                {project.gitHub && (
+                  <a
+                    href={project.gitHub}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 rounded-lg border border-slate-600 px-4 py-2.5 text-center font-medium text-gray-200 transition duration-300 hover:border-purple-400 hover:bg-purple-500/10"
+                  >
+                    GitHub ↗
+                  </a>
+                )}
+              </div>
+            </div>
+          </motion.article>
+        ))}
+      </div>
+    </motion.section>
+  );
 }
 
 export default Projects;

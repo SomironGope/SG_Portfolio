@@ -1,107 +1,196 @@
+
 import { motion } from "framer-motion";
-
-
-
-// ---------------- Contacts Icons---------------
-import { MdOutlineEmail } from "react-icons/md";
-import { MdAddCall } from "react-icons/md";
-
-
+import { MdOutlineEmail, MdAddCall } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { useState } from "react";
 
-
-
 function Contact() {
-  const [result,setResult] = useState ("");
-  const [loading,setLoading] = useState(false);
-
+  const [result, setResult] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading (true);
+
+    if (loading) return;
+
+    setLoading(true);
     setResult("");
+    setSuccess(false);
 
-    const formData = new FormData(e.target);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const accessKey = import.meta.env.VITE_WEB3FORM_ACCESS_KEY;
 
-    //
-
-    formData.append("access_key", import.meta.env.VITE_WEB3FORM_ACCESS_KEY);
-    
-    try {
-      const response = await fetch ("https://api.web3forms.com/submit", { method: "POST", body: formData,});
-
-      const data = await response.json();
-      console.log(data)
-
-      if(data.success) {
-
-      
-
-       setResult ("Message sent successfully!");
-        e.target.reset();
-
-       setTimeout(() =>{
-      setResult ("")
-         
-      },2000)
-       
-      
-       
-      }else{
-        setResult("Something went wrong, Please try again");
-      }
-
-    } catch (error) {
-      console.error(error);
-      setResult ("Failed to send message.");
-
-      setTimeout (() => {
-        setResult ("")
-      }, 2000)
-    }finally{
-      setLoading (false)
+    if (!accessKey) {
+      setResult("Contact form configuration is missing. Please try again later.");
+      setLoading(false);
+      return;
     }
 
+    formData.append("access_key", accessKey);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Unable to send your message.");
+      }
+
+      setSuccess(true);
+      setResult("Message sent successfully! I'll get back to you soon.");
+      form.reset();
+    } catch (error) {
+      console.error("Contact form error:", error);
+      setSuccess(false);
+      setResult(
+        "Sorry, your message could not be sent. Please try again later."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
-return ( <motion.section initial = {{opacity: 0, y: 50}} whileInView={{opacity: 1, y: 0}} transition={{duration: 0.8, delay:0.2}} 
-      viewport = {{once:true}} id ='contact' className=" min-h-screen py-20">
-        <h1 className="text-4xl font-bold text-center tracking-wider">Get In Touch</h1>
-        <div className="flex flex-col sm:flex-row sm:justify-between py-5 px-4 gap-2 sm:gap-4 md:6 ">
-          {/* -------------Left Side-------------- */}
-          <div className="sm:w-1/2">
-             <h1 className="text-3xl font-bold bg-linear-to-r from-orange-500 to-purple-600 bg-clip-text text-transparent mb-2">Let's talk</h1>
-             <p className="text-sm md:text-base leading-6 space-x-2 tracking-wider">I'm currently available to take on new projects, so feel free to send me a message about anything that you want me to work on. You can contact anytime</p>
-            <div className="flex items-center justify-start gap-2 text-center py-1 mt-5">
-               <MdOutlineEmail className="w-6" /> <p className="text-sm text-gray-300"><strong>Email:</strong> somirongope466@gmail.com</p>
+  return (
+    <motion.section
+      id="contact"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, delay: 0.1 }}
+      viewport={{ once: true }}
+      className="min-h-screen px-4 py-20"
+    >
+      <h2 className="mb-12 text-center text-4xl font-bold tracking-wider text-gray-200">
+        <span className="bg-linear-to-r from-orange-400 to-purple-500 bg-clip-text text-transparent">
+          Get In Touch
+        </span>
+      </h2>
+
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 md:grid-cols-2 md:gap-16">
+        {/* Contact information */}
+        <div className="flex flex-col justify-center">
+          <h3 className="mb-4 text-3xl font-bold text-orange-400">
+            Let's Talk
+          </h3>
+
+          <p className="mb-6 leading-7 text-gray-300">
+            Have a website idea or need help with a full-stack web application?
+            Feel free to contact me. I'd be happy to discuss your project.
+          </p>
+
+          <div className="space-y-5">
+            <a
+              href="mailto:somirongope466@gmail.com"
+              className="flex items-center gap-3 text-gray-300 transition hover:text-sky-400"
+            >
+              <MdOutlineEmail className="shrink-0 text-2xl text-orange-400" />
+              <span className="break-all">
+                <strong>Email:</strong> somirongope466@gmail.com
+              </span>
+            </a>
+
+            <a
+              href="tel:+966542658745"
+              className="flex items-center gap-3 text-gray-300 transition hover:text-sky-400"
+            >
+              <MdAddCall className="shrink-0 text-2xl text-orange-400" />
+              <span>
+                <strong>Phone:</strong> +966 54 697 2819
+              </span>
+            </a>
+
+            <div className="flex items-center gap-3 text-gray-300">
+              <FaLocationDot className="shrink-0 text-xl text-orange-400" />
+              <span>
+                <strong>Location:</strong> Riyadh, Saudi Arabia
+              </span>
             </div>
-            <div className="flex items-center justify-start gap-2 text-center py-1">
-              <MdAddCall className="w-6"/><p className="text-sm text-gray-300"> <strong>Phone No:</strong>+966542658745 </p>
-            </div>
-            <div  className="flex items-center justify-start gap-2 text-center py-1">
-               <FaLocationDot className="w-6" /> <p className="text-sm text-gray-300"><strong>Location:</strong> Riyadh, Saudi Arabia</p>
-            </div>
-          </div>
-          {/* ----------------Right Side--------------- */}
-          <div className="sm:flex-1 ">
-             <form onSubmit = {handleSubmit} className="flex flex-col py-10 gap-2 ">
-                <label htmlFor="" className="text-sm text-gray-300 font-semibold">Your Name</label>
-                <input type="text" name="user_name" placeholder="Enter your name" required className="outline-none py-2 px-2 text-sm text-gray-300 rounded-sm border border-slate-700/50 placeholder:text-sm placeholder:text-gray-400 focus:border focus-visible:border-sky-800"/>   
-                <label htmlFor="" className="text-sm text-gray-300 font-semibold">Your Email</label>
-                <input type="email" name="user_email" placeholder="Enter your email" required className="outline-none py-2 px-2 text-sm text-gray-300 rounded-sm border border-slate-700/50 placeholder:text-sm placeholder:text-gray-400 focus:border focus-visible:border-sky-800"/>
-                <label htmlFor="" className="text-sm text-gray-300 font-semibold mt-2">Write your message here</label>
-                <textarea name= 'message' placeholder="Enter your message" rows= '8' required className=" py-1 my-2 px-1 outline-none text-sm text-gray-300 rounded-sm  border border-slate-600 focus:border focus-visible:border-sky-800"/>
-                <button type="submit" disabled = {loading} className=" w-50 text-center items-center justify-center py-2 px-6 mt-2 text-sm bg-amber-500 cursor-pointer rounded-sm hover:bg-sky-400 hover:scale-105 hover:transition-all hover:ease-in-out hover:duration-300"> {loading ? "Sending... " : "Submit now" } </button>
-                {result && ( <p className="text-center mt-4  "> {result} </p> )}
-             </form>
           </div>
         </div>
-      </motion.section>)
-    
-     
-    
-  
+
+        {/* Contact form */}
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-2 rounded-xl border border-slate-700 bg-slate-900/40 p-5 sm:p-7"
+        >
+          <label
+            htmlFor="user_name"
+            className="mt-1 text-sm font-semibold text-gray-300"
+          >
+            Your Name
+          </label>
+          <input
+            id="user_name"
+            type="text"
+            name="user_name"
+            placeholder="Enter your name"
+            autoComplete="name"
+            maxLength={100}
+            required
+            className="rounded-lg border border-slate-700 bg-slate-950/40 px-3 py-3 text-gray-100 outline-none transition placeholder:text-gray-500 focus:border-sky-500"
+          />
+
+          <label
+            htmlFor="user_email"
+            className="mt-3 text-sm font-semibold text-gray-300"
+          >
+            Your Email
+          </label>
+          <input
+            id="user_email"
+            type="email"
+            name="user_email"
+            placeholder="Enter your email"
+            autoComplete="email"
+            maxLength={254}
+            required
+            className="rounded-lg border border-slate-700 bg-slate-950/40 px-3 py-3 text-gray-100 outline-none transition placeholder:text-gray-500 focus:border-sky-500"
+          />
+
+          <label
+            htmlFor="message"
+            className="mt-3 text-sm font-semibold text-gray-300"
+          >
+            Your Message
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            placeholder="Tell me about your project..."
+            rows={6}
+            maxLength={5000}
+            required
+            className="resize-y rounded-lg border border-slate-700 bg-slate-950/40 px-3 py-3 text-gray-100 outline-none transition placeholder:text-gray-500 focus:border-sky-500"
+          />
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="mt-4 w-full rounded-lg bg-linear-to-r from-orange-500 to-purple-600 px-6 py-3 font-semibold text-white transition duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-purple-500/20 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {loading ? "Sending..." : "Send Message"}
+          </button>
+
+          {result && (
+            <p
+              role="status"
+              aria-live="polite"
+              className={`mt-3 text-center text-sm ${
+                success ? "text-green-400" : "text-red-400"
+              }`}
+            >
+              {result}
+            </p>
+          )}
+        </form>
+      </div>
+    </motion.section>
+  );
 }
 
 export default Contact;

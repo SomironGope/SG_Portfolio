@@ -1,7 +1,7 @@
 
 import ecomerce_image from '../../assets/project/image.png';
 import portfolio_image  from '../../assets/project/image copy.png';
-import ecommerce_image_2 from '../../assets/project/image copy 2.png';
+import ecommerce_image_3 from '../../assets/project/image3.png'
 
 
 
@@ -25,12 +25,12 @@ const projects = [
     title:'Portfolio Website',
     description: 'Personal portfolio with framer Motion animation',
     tech: ['React.js', 'Tailwind','Context API'],
-    live: 'https://forever-ecommerce-f73m.vercel.app/',
+    live: 'https://sg-portfolio-ten.vercel.app/',
     gitHub: 'https://github.com/SomironGope/SG_Portfolio/tree/main'
   },
   {
     id:3,
-    image: ecommerce_image_2,
+    image: ecommerce_image_3,
     title:'Forever Ecommerce',
     description: "Full responsive ecommerce website build with React and Tailwind CSS",
     tech: ['React.js', 'Tailwind','Context API'],
